@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const BookManager = () => {
   const [books, setBooks] = useState([]);
   const [racks, setRacks] = useState([]);
@@ -21,7 +23,7 @@ const BookManager = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/books');
+      const response = await axios.get(`${API}/books`);
       setBooks(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching books', error);
@@ -30,8 +32,7 @@ const BookManager = () => {
 
   const fetchRacks = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/racks');
-      setRacks(Array.isArray(response.data) ? response.data : []);
+const response = await axios.get(`${API}/racks`);      setRacks(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching racks', error);
     }
@@ -53,7 +54,7 @@ const BookManager = () => {
     }
 
     try {
-await axios.post('https://lib-org-backend-production.up.railway.app/api/books', {        ...formData,
+await axios.post(`${API}/books`, {        ...formData,
         totalCopies: parseInt(formData.totalCopies),
         rackId: formData.rackId ? parseInt(formData.rackId) : null
       });
@@ -69,7 +70,7 @@ await axios.post('https://lib-org-backend-production.up.railway.app/api/books', 
   const deleteBook = async (id) => {
     if (!window.confirm('Are you sure you want to remove this book from the system?')) return;
     try {
-      await axios.delete(`https://lib-org-backend-production.up.railway.app/api/books/${id}`);
+      await axios.delete(`${API}/books/${id}`);
       fetchBooks();
       setSelectedBook(null);
       alert('Book removed successfully');

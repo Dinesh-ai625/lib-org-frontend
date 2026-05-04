@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const TransactionManager = () => {
   const [transactions, setTransactions] = useState([]);
   const [books, setBooks] = useState([]);
@@ -16,7 +18,7 @@ const TransactionManager = () => {
 
   const fetchTransactions = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/transactions/all');      setTransactions(response.data);
+const response = await axios.get(`${API}/transactions/all`);      setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions', error);
     }
@@ -24,7 +26,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/books');
+      const response = await axios.get(`${API}/books`);
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books', error);
@@ -33,7 +35,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/users');
+      const response = await axios.get(`${API}/users`);
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -43,7 +45,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
   const issueBook = async (e) => {
     e.preventDefault();
     try {
-await axios.post('https://lib-org-backend-production.up.railway.app/api/transactions/issue', {        bookId: parseInt(issueData.bookId),
+await axios.post(`${API}/transactions/issue`, {        bookId: parseInt(issueData.bookId),
         userId: parseInt(issueData.userId)
       });
       setIssueData({ bookId: '', userId: '' });
@@ -56,7 +58,7 @@ await axios.post('https://lib-org-backend-production.up.railway.app/api/transact
 
   const returnBook = async (transactionId) => {
     try {
-      await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/return/${transactionId}`);
+      await axios.post(`${API}/transactions/return/${transactionId}`);
       fetchTransactions();
       fetchBooks();
     } catch (error) {

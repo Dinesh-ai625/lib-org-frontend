@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
+
 const Signup = () => {
   const { signup } = useContext(AuthContext);
   const navigate = useNavigate();

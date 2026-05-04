@@ -2,7 +2,8 @@
   --primary-color: #10a37f;
   --secondary-color: #1a7f64;
   --bg-color-light: #ffffff;
-  --text-color-light: #111827; /* Darker for better visibility */
+  --text-color-light: #111827;
+  /* Darker for better visibility */
   --text-muted: #4b5563;
   --bg-color-dark: #212121;
   --text-color-dark: #ececec;
@@ -62,7 +63,7 @@ body {
   background: #ffffff;
   border: 1px solid var(--sidebar-border);
   border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-primary {
@@ -157,8 +158,15 @@ body {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -201,5 +209,5 @@ body {
 
 .book-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }

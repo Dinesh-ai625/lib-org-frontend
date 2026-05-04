@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const username = localStorage.getItem('username');
-    
+
     if (token && role && username) {
       setUser({ token, role, username });
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -22,12 +24,12 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-const response = await axios.post(`${API}/auth/login`, { username, password });      const { token, role, username: resUser } = response.data;
-      
+      const response = await axios.post(`${API}/auth/login`, { username, password }); const { token, role, username: resUser } = response.data;
+
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
       localStorage.setItem('username', resUser);
-      
+
       setUser({ token, role, username: resUser });
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       return { success: true, role };

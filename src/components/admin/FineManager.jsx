@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const FineManager = () => {
   const [fines, setFines] = useState([]);
   const [users, setUsers] = useState([]);
@@ -13,7 +15,7 @@ const FineManager = () => {
 
   const fetchFines = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/fines/all');      setFines(response.data);
+const response = await axios.get(`${API}/fines/all`);      setFines(response.data);
     } catch (error) {
       console.error('Error fetching fines', error);
     }
@@ -21,7 +23,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/users');
+      const response = await axios.get(`${API}/users`);
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -31,7 +33,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
   const addFine = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://lib-org-backend-production.up.railway.app/api/fines/add', fineData);
+      await axios.post(`${API}/fines/add`, fineData);
       setFineData({ userId: '', amount: '', reason: '' });
       fetchFines();
     } catch (error) {

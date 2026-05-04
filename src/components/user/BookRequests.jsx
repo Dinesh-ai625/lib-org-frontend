@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const BookRequests = () => {
   const [requests, setRequests] = useState([]);
   const [requestData, setRequestData] = useState({ bookTitle: '', author: '' });
@@ -11,7 +13,7 @@ const BookRequests = () => {
 
   const fetchMyRequests = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/requests/my');      setRequests(response.data);
+      const response = await axios.get(`${API}/requests/my`); setRequests(response.data);
     } catch (error) {
       console.error('Error fetching requests', error);
     }
@@ -20,7 +22,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
   const submitRequest = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://lib-org-backend-production.up.railway.app/api/requests/submit', requestData);
+      await axios.post(`${API}/requests/submit`, requestData);
       setRequestData({ bookTitle: '', author: '' });
       fetchMyRequests();
     } catch (error) {
@@ -32,24 +34,24 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
     <div className="glass-panel animate-fade-in" style={{ padding: '24px' }}>
       <h3 style={{ marginBottom: '10px', color: '#10a37f' }}>Request a New Book</h3>
       <p style={{ color: '#6b7280', fontSize: '14px', marginBottom: '20px' }}>Can't find a book in our library? Request it here, and the librarian will review it!</p>
-      
+
       <form onSubmit={submitRequest} style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
-        <input 
-          type="text" 
-          placeholder="Book Title" 
-          className="input-field" 
-          value={requestData.bookTitle} 
-          onChange={(e) => setRequestData({ ...requestData, bookTitle: e.target.value })} 
-          required 
+        <input
+          type="text"
+          placeholder="Book Title"
+          className="input-field"
+          value={requestData.bookTitle}
+          onChange={(e) => setRequestData({ ...requestData, bookTitle: e.target.value })}
+          required
           style={{ flex: 1, marginBottom: 0 }}
         />
-        <input 
-          type="text" 
-          placeholder="Author" 
-          className="input-field" 
-          value={requestData.author} 
-          onChange={(e) => setRequestData({ ...requestData, author: e.target.value })} 
-          required 
+        <input
+          type="text"
+          placeholder="Author"
+          className="input-field"
+          value={requestData.author}
+          onChange={(e) => setRequestData({ ...requestData, author: e.target.value })}
+          required
           style={{ flex: 1, marginBottom: 0 }}
         />
         <button type="submit" className="btn-primary" style={{ width: 'auto' }}>Submit Request</button>
@@ -72,9 +74,9 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
                 <td style={{ padding: '12px', color: '#111827', fontWeight: '500' }}>{req.bookTitle}</td>
                 <td style={{ padding: '12px', color: '#6b7280' }}>{req.author}</td>
                 <td style={{ padding: '12px' }}>
-                  <span style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px', 
+                  <span style={{
+                    padding: '4px 8px',
+                    borderRadius: '4px',
                     fontSize: '11px',
                     fontWeight: 'bold',
                     backgroundColor: req.status === 'PENDING' ? '#fef3c7' : (req.status === 'APPROVED' ? '#dcfce7' : '#fee2e2'),
@@ -85,11 +87,11 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
                 </td>
                 <td style={{ padding: '12px' }}>
                   {req.status === 'PENDING' && (
-                    <button 
+                    <button
                       onClick={async () => {
-                        if(window.confirm('Cancel this request?')) {
+                        if (window.confirm('Cancel this request?')) {
                           try {
-                            await axios.delete(`https://lib-org-backend-production.up.railway.app/api/requests/cancel/${req.id}`);
+                            await axios.delete(`${API}/requests/cancel/${req.id}`);
                             fetchMyRequests();
                           } catch (error) {
                             alert('Failed to cancel request');
@@ -106,7 +108,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
             ))}
           </tbody>
         </table>
-        {requests.length === 0 && <p style={{color: '#6b7280', marginTop: '15px'}}>No book requests found.</p>}
+        {requests.length === 0 && <p style={{ color: '#6b7280', marginTop: '15px' }}>No book requests found.</p>}
       </div>
     </div>
   );

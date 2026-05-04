@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
@@ -10,7 +12,7 @@ const Favorites = () => {
 
   const fetchFavorites = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/favorites/my');      setFavorites(response.data);
+const response = await axios.get(`${API}/favorites/my`);      setFavorites(response.data);
     } catch (error) {
       console.error('Error fetching favorites', error);
     }
@@ -18,7 +20,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const removeFavorite = async (bookId) => {
     try {
-      await axios.delete(`https://lib-org-backend-production.up.railway.app/api/favorites/remove/${bookId}`);
+      await axios.delete(`${API}/favorites/remove/${bookId}`);
       fetchFavorites();
     } catch (error) {
       console.error('Error removing favorite', error);

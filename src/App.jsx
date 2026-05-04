@@ -22,13 +22,13 @@ function App() {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      
+
       <Route path="/admin/*" element={
         <ProtectedRoute allowedRoles={['ADMIN', 'LIBRARIAN']}>
           <AdminDashboard />
         </ProtectedRoute>
       } />
-      
+
       <Route path="/user/*" element={
         <ProtectedRoute allowedRoles={['USER']}>
           <UserDashboard />

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const Profile = () => {
   const { user } = useContext(AuthContext);
   const fileInputRef = useRef(null);
@@ -26,7 +28,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/users/profile');      if (response.data) {
+const response = await axios.get(`${API}/users/profile`);      if (response.data) {
         setProfile({
           username: response.data.username || '',
           firstName: response.data.firstName || '',
@@ -79,7 +81,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
     e.preventDefault();
     setSaving(true);
     try {
-      await axios.put('https://lib-org-backend-production.up.railway.app/api/users/profile', profile);
+      await axios.put(`${API}/users/profile`, profile);
       alert('Profile updated successfully! (If you changed your username, it will be updated here and on your next login.)');
       fetchProfile();
     } catch (error) {
@@ -92,7 +94,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
   const handleDeleteAccount = async () => {
     if (window.confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
       try {
-        await axios.delete('https://lib-org-backend-production.up.railway.app/api/users/account');
+        await axios.delete(`${API}/users/account`);
         alert('Account deleted successfully.');
         logout();
       } catch (error) {
@@ -104,7 +106,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
   const submitPasswordChange = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://lib-org-backend-production.up.railway.app/api/users/change-password', passwords);
+      await axios.post(`${API}/users/change-password`, passwords);
       alert('Password changed successfully!');
       setPasswords({ currentPassword: '', newPassword: '' });
     } catch (error) {

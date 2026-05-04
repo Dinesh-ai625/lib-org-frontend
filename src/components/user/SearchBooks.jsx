@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
   const [books, setBooks] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -25,7 +27,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const searchBooks = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/books/search', {        params: { query, filterBy }
+const response = await axios.get(`${API}/books/search`, {        params: { query, filterBy }
       });
       setBooks(response.data);
     } catch (error) {
@@ -35,7 +37,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/favorites/my');
+      const response = await axios.get(`${API}/favorites/my`);
       setFavorites(response.data);
     } catch (error) {
       console.error('Error fetching favorites', error);
@@ -46,9 +48,9 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
     const isFav = favorites.some(f => f.book.id === bookId);
     try {
       if (isFav) {
-        await axios.delete(`https://lib-org-backend-production.up.railway.app/api/favorites/remove/${bookId}`);
+        await axios.delete(`${API}/favorites/remove/${bookId}`);
       } else {
-        await axios.post('https://lib-org-backend-production.up.railway.app/api/favorites/add', { bookId });
+        await axios.post(`${API}/favorites/add`, { bookId });
       }
       fetchFavorites();
     } catch (error) {
@@ -58,7 +60,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const fetchMyRequests = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/requests/my');
+      const response = await axios.get(`${API}/requests/my`);
       setMyRequests(response.data);
     } catch (error) {
       console.error('Error fetching requests', error);
@@ -67,7 +69,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const submitBookRequest = async (book) => {
     try {
-      await axios.post('https://lib-org-backend-production.up.railway.app/api/requests/submit', { bookTitle: book.title, author: book.author });
+      await axios.post(`${API}/requests/submit`, { bookTitle: book.title, author: book.author });
       alert('Book request submitted successfully!');
       fetchMyRequests();
     } catch (error) {
@@ -77,7 +79,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const cancelBookRequest = async (requestId) => {
     try {
-      await axios.delete(`https://lib-org-backend-production.up.railway.app/api/requests/cancel/${requestId}`);
+      await axios.delete(`${API}/requests/cancel/${requestId}`);
       alert('Request cancelled successfully!');
       fetchMyRequests();
     } catch (error) {
@@ -87,7 +89,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const requestBorrow = async (bookId) => {
     try {
-      await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/user-borrow/${bookId}`);
+      await axios.post(`${API}/transactions/user-borrow/${bookId}`);
       alert('Book borrowed successfully!');
       if (fetchMyTransactions) fetchMyTransactions();
       searchBooks(); // refresh copies count
@@ -98,7 +100,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const returnBook = async (txId) => {
     try {
-      await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/user-return/${txId}`);
+      await axios.post(`${API}/transactions/user-return/${txId}`);
       alert('Book returned successfully!');
       if (fetchMyTransactions) fetchMyTransactions();
       searchBooks(); // refresh copies count

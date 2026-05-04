@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
 const AdminAccountManager = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -20,7 +21,7 @@ const AdminAccountManager = () => {
     setLoading(true);
     setMessage({ text: '', type: '' });
     try {
-await axios.post('https://lib-org-backend-production.up.railway.app/api/auth/signup', formData);      setMessage({ text: `Account created successfully for ${formData.username}!`, type: 'success' });
+await axios.post(`${API}/auth/signup`, formData);     setMessage({ text: `Account created successfully for ${formData.username}!`, type: 'success' });
       setFormData({ username: '', email: '', password: '', role: 'USER' });
     } catch (error) {
       setMessage({ text: error.response?.data || 'Failed to create account', type: 'error' });

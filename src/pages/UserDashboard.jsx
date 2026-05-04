@@ -6,6 +6,8 @@ import BookRequests from '../components/user/BookRequests';
 import Favorites from '../components/user/Favorites';
 import Profile from '../components/user/Profile';
 
+const API = "https://lib-org-backend-production.up.railway.app/api";
+
 const UserDashboard = () => {
   const { user, logout } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('search');
@@ -21,7 +23,7 @@ const UserDashboard = () => {
 
   const fetchMyTransactions = async () => {
     try {
-const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/transactions/my');      setTransactions(response.data);
+const response = await axios.get(`${API}/transactions/my`);      setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions', error);
     }
@@ -29,7 +31,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const fetchMyFines = async () => {
     try {
-      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/fines/my');
+      const response = await axios.get(`${API}/fines/my`);
       setFines(response.data);
     } catch (error) {
       console.error('Error fetching fines', error);
@@ -38,7 +40,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
 
   const payFine = async (fineId) => {
     try {
-      await axios.post(`https://lib-org-backend-production.up.railway.app/api/fines/pay/${fineId}`);
+      await axios.post(`${API}/fines/pay/${fineId}`);
       fetchMyFines(); // refresh
       alert('Fine paid successfully!');
     } catch (error) {
@@ -129,7 +131,7 @@ const response = await axios.get('https://lib-org-backend-production.up.railway.
                     <button 
                       onClick={async () => {
                         try {
-                          await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/user-return/${tx.id}`);
+                          await axios.post(`${API}/transactions/user-return/${tx.id}`);
                           fetchMyTransactions();
                           alert('Book returned successfully!');
                         } catch (error) {
