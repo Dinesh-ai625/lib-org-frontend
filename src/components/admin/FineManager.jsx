@@ -13,8 +13,7 @@ const FineManager = () => {
 
   const fetchFines = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/fines/all');
-      setFines(response.data);
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/fines/all');      setFines(response.data);
     } catch (error) {
       console.error('Error fetching fines', error);
     }
@@ -22,7 +21,7 @@ const FineManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/users');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/users');
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -32,7 +31,7 @@ const FineManager = () => {
   const addFine = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/fines/add', fineData);
+      await axios.post('https://lib-org-backend-production.up.railway.app/api/fines/add', fineData);
       setFineData({ userId: '', amount: '', reason: '' });
       fetchFines();
     } catch (error) {

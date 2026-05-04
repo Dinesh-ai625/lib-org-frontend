@@ -22,8 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', { username, password });
-      const { token, role, username: resUser } = response.data;
+const response = await axios.post(`${API}/auth/login`, { username, password });      const { token, role, username: resUser } = response.data;
       
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
@@ -39,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (username, email, password, role) => {
     try {
-      await axios.post('http://localhost:8080/api/auth/signup', { username, email, password, role });
+      await axios.post(`${API}/auth/signup`, { username, email, password, role });
       return { success: true };
     } catch (error) {
       return { success: false, message: error.response?.data || 'Signup failed' };

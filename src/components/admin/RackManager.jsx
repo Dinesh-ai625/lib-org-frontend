@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const API = 'http://localhost:8080/api';
-
+const API = 'https://lib-org-backend-production.up.railway.app/api';
 const RackManager = () => {
   const [racks, setRacks] = useState([]);
   const [books, setBooks] = useState([]);

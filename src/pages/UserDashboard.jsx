@@ -21,8 +21,7 @@ const UserDashboard = () => {
 
   const fetchMyTransactions = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/transactions/my');
-      setTransactions(response.data);
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/transactions/my');      setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions', error);
     }
@@ -30,7 +29,7 @@ const UserDashboard = () => {
 
   const fetchMyFines = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/fines/my');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/fines/my');
       setFines(response.data);
     } catch (error) {
       console.error('Error fetching fines', error);
@@ -39,7 +38,7 @@ const UserDashboard = () => {
 
   const payFine = async (fineId) => {
     try {
-      await axios.post(`http://localhost:8080/api/fines/pay/${fineId}`);
+      await axios.post(`https://lib-org-backend-production.up.railway.app/api/fines/pay/${fineId}`);
       fetchMyFines(); // refresh
       alert('Fine paid successfully!');
     } catch (error) {
@@ -130,7 +129,7 @@ const UserDashboard = () => {
                     <button 
                       onClick={async () => {
                         try {
-                          await axios.post(`http://localhost:8080/api/transactions/user-return/${tx.id}`);
+                          await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/user-return/${tx.id}`);
                           fetchMyTransactions();
                           alert('Book returned successfully!');
                         } catch (error) {

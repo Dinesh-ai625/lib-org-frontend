@@ -21,7 +21,7 @@ const BookManager = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/books');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/books');
       setBooks(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching books', error);
@@ -30,7 +30,7 @@ const BookManager = () => {
 
   const fetchRacks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/racks');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/racks');
       setRacks(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching racks', error);
@@ -53,8 +53,7 @@ const BookManager = () => {
     }
 
     try {
-      await axios.post('http://localhost:8080/api/books', {
-        ...formData,
+await axios.post('https://lib-org-backend-production.up.railway.app/api/books', {        ...formData,
         totalCopies: parseInt(formData.totalCopies),
         rackId: formData.rackId ? parseInt(formData.rackId) : null
       });
@@ -70,7 +69,7 @@ const BookManager = () => {
   const deleteBook = async (id) => {
     if (!window.confirm('Are you sure you want to remove this book from the system?')) return;
     try {
-      await axios.delete(`http://localhost:8080/api/books/${id}`);
+      await axios.delete(`https://lib-org-backend-production.up.railway.app/api/books/${id}`);
       fetchBooks();
       setSelectedBook(null);
       alert('Book removed successfully');

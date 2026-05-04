@@ -25,8 +25,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const searchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/books/search', {
-        params: { query, filterBy }
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/books/search', {        params: { query, filterBy }
       });
       setBooks(response.data);
     } catch (error) {
@@ -36,7 +35,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/favorites/my');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/favorites/my');
       setFavorites(response.data);
     } catch (error) {
       console.error('Error fetching favorites', error);
@@ -47,9 +46,9 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
     const isFav = favorites.some(f => f.book.id === bookId);
     try {
       if (isFav) {
-        await axios.delete(`http://localhost:8080/api/favorites/remove/${bookId}`);
+        await axios.delete(`https://lib-org-backend-production.up.railway.app/api/favorites/remove/${bookId}`);
       } else {
-        await axios.post('http://localhost:8080/api/favorites/add', { bookId });
+        await axios.post('https://lib-org-backend-production.up.railway.app/api/favorites/add', { bookId });
       }
       fetchFavorites();
     } catch (error) {
@@ -59,7 +58,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const fetchMyRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/requests/my');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/requests/my');
       setMyRequests(response.data);
     } catch (error) {
       console.error('Error fetching requests', error);
@@ -68,7 +67,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const submitBookRequest = async (book) => {
     try {
-      await axios.post('http://localhost:8080/api/requests/submit', { bookTitle: book.title, author: book.author });
+      await axios.post('https://lib-org-backend-production.up.railway.app/api/requests/submit', { bookTitle: book.title, author: book.author });
       alert('Book request submitted successfully!');
       fetchMyRequests();
     } catch (error) {
@@ -78,7 +77,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const cancelBookRequest = async (requestId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/requests/cancel/${requestId}`);
+      await axios.delete(`https://lib-org-backend-production.up.railway.app/api/requests/cancel/${requestId}`);
       alert('Request cancelled successfully!');
       fetchMyRequests();
     } catch (error) {
@@ -88,7 +87,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const requestBorrow = async (bookId) => {
     try {
-      await axios.post(`http://localhost:8080/api/transactions/user-borrow/${bookId}`);
+      await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/user-borrow/${bookId}`);
       alert('Book borrowed successfully!');
       if (fetchMyTransactions) fetchMyTransactions();
       searchBooks(); // refresh copies count
@@ -99,7 +98,7 @@ const SearchBooks = ({ activeTransactions = [], fetchMyTransactions }) => {
 
   const returnBook = async (txId) => {
     try {
-      await axios.post(`http://localhost:8080/api/transactions/user-return/${txId}`);
+      await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/user-return/${txId}`);
       alert('Book returned successfully!');
       if (fetchMyTransactions) fetchMyTransactions();
       searchBooks(); // refresh copies count

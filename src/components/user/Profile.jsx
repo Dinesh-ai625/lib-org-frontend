@@ -26,8 +26,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/users/profile');
-      if (response.data) {
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/users/profile');      if (response.data) {
         setProfile({
           username: response.data.username || '',
           firstName: response.data.firstName || '',
@@ -80,7 +79,7 @@ const Profile = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await axios.put('http://localhost:8080/api/users/profile', profile);
+      await axios.put('https://lib-org-backend-production.up.railway.app/api/users/profile', profile);
       alert('Profile updated successfully! (If you changed your username, it will be updated here and on your next login.)');
       fetchProfile();
     } catch (error) {
@@ -93,7 +92,7 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     if (window.confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
       try {
-        await axios.delete('http://localhost:8080/api/users/account');
+        await axios.delete('https://lib-org-backend-production.up.railway.app/api/users/account');
         alert('Account deleted successfully.');
         logout();
       } catch (error) {
@@ -105,7 +104,7 @@ const Profile = () => {
   const submitPasswordChange = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/users/change-password', passwords);
+      await axios.post('https://lib-org-backend-production.up.railway.app/api/users/change-password', passwords);
       alert('Password changed successfully!');
       setPasswords({ currentPassword: '', newPassword: '' });
     } catch (error) {

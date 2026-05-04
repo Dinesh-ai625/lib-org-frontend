@@ -16,8 +16,7 @@ const TransactionManager = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/transactions/all');
-      setTransactions(response.data);
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/transactions/all');      setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions', error);
     }
@@ -25,7 +24,7 @@ const TransactionManager = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/books');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/books');
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books', error);
@@ -34,7 +33,7 @@ const TransactionManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/users');
+      const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/users');
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -44,8 +43,7 @@ const TransactionManager = () => {
   const issueBook = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/transactions/issue', {
-        bookId: parseInt(issueData.bookId),
+await axios.post('https://lib-org-backend-production.up.railway.app/api/transactions/issue', {        bookId: parseInt(issueData.bookId),
         userId: parseInt(issueData.userId)
       });
       setIssueData({ bookId: '', userId: '' });
@@ -58,7 +56,7 @@ const TransactionManager = () => {
 
   const returnBook = async (transactionId) => {
     try {
-      await axios.post(`http://localhost:8080/api/transactions/return/${transactionId}`);
+      await axios.post(`https://lib-org-backend-production.up.railway.app/api/transactions/return/${transactionId}`);
       fetchTransactions();
       fetchBooks();
     } catch (error) {

@@ -20,8 +20,7 @@ const AdminAccountManager = () => {
     setLoading(true);
     setMessage({ text: '', type: '' });
     try {
-      await axios.post('http://localhost:8080/api/auth/signup', formData);
-      setMessage({ text: `Account created successfully for ${formData.username}!`, type: 'success' });
+await axios.post('https://lib-org-backend-production.up.railway.app/api/auth/signup', formData);      setMessage({ text: `Account created successfully for ${formData.username}!`, type: 'success' });
       setFormData({ username: '', email: '', password: '', role: 'USER' });
     } catch (error) {
       setMessage({ text: error.response?.data || 'Failed to create account', type: 'error' });

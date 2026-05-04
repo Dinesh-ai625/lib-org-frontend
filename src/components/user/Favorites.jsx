@@ -10,8 +10,7 @@ const Favorites = () => {
 
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/favorites/my');
-      setFavorites(response.data);
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/favorites/my');      setFavorites(response.data);
     } catch (error) {
       console.error('Error fetching favorites', error);
     }
@@ -19,7 +18,7 @@ const Favorites = () => {
 
   const removeFavorite = async (bookId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/favorites/remove/${bookId}`);
+      await axios.delete(`https://lib-org-backend-production.up.railway.app/api/favorites/remove/${bookId}`);
       fetchFavorites();
     } catch (error) {
       console.error('Error removing favorite', error);

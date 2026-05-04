@@ -10,8 +10,7 @@ const BookRequestManager = () => {
 
   const fetchRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/requests/all');
-      setRequests(response.data);
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/requests/all');      setRequests(response.data);
     } catch (error) {
       console.error('Error fetching requests', error);
     }
@@ -19,7 +18,7 @@ const BookRequestManager = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.post(`http://localhost:8080/api/requests/update/${id}`, { status });
+      await axios.post(`https://lib-org-backend-production.up.railway.app/api/requests/update/${id}`, { status });
       fetchRequests();
     } catch (error) {
       console.error('Error updating status', error);

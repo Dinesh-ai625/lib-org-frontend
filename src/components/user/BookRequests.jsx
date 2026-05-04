@@ -11,8 +11,7 @@ const BookRequests = () => {
 
   const fetchMyRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/requests/my');
-      setRequests(response.data);
+const response = await axios.get('https://lib-org-backend-production.up.railway.app/api/requests/my');      setRequests(response.data);
     } catch (error) {
       console.error('Error fetching requests', error);
     }
@@ -21,7 +20,7 @@ const BookRequests = () => {
   const submitRequest = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/requests/submit', requestData);
+      await axios.post('https://lib-org-backend-production.up.railway.app/api/requests/submit', requestData);
       setRequestData({ bookTitle: '', author: '' });
       fetchMyRequests();
     } catch (error) {
@@ -90,7 +89,7 @@ const BookRequests = () => {
                       onClick={async () => {
                         if(window.confirm('Cancel this request?')) {
                           try {
-                            await axios.delete(`http://localhost:8080/api/requests/cancel/${req.id}`);
+                            await axios.delete(`https://lib-org-backend-production.up.railway.app/api/requests/cancel/${req.id}`);
                             fetchMyRequests();
                           } catch (error) {
                             alert('Failed to cancel request');
