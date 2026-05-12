@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const API = 'https://lib-org-backend-production.up.railway.app/api';
+import API from '../../apiConfig';
+
 
 const RackManager = () => {
   const [racks, setRacks] = useState([]);
@@ -29,8 +30,8 @@ const RackManager = () => {
       ]);
       setRacks(Array.isArray(rRes.data) ? rRes.data : []);
       setBooks(Array.isArray(bRes.data) ? bRes.data : []);
-    } catch (e) { 
-      console.error('Load error:', e); 
+    } catch (e) {
+      console.error('Load error:', e);
     }
   }, []);
 
@@ -40,7 +41,7 @@ const RackManager = () => {
   const handleDragStart = (e, type, data) => {
     setDraggedItem({ type, data });
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', ''); 
+    e.dataTransfer.setData('text/plain', '');
   };
 
   const handleDragOver = (e, id) => {
@@ -66,9 +67,9 @@ const RackManager = () => {
       else if (source.type === 'book' && targetType === 'rack') {
         const targetRackBooks = books.filter(b => b.rack?.id === targetData.id);
         const nextPos = targetRackBooks.length > 0 ? Math.max(...targetRackBooks.map(b => b.position || 0)) + 1 : 0;
-        await axios.patch(`${API}/books/${source.data.id}/rack`, { 
-          rackId: targetData.id, 
-          position: nextPos 
+        await axios.patch(`${API}/books/${source.data.id}/rack`, {
+          rackId: targetData.id,
+          position: nextPos
         });
       }
       // Book -> Book (Swap positions within shelf/rack)
@@ -84,9 +85,9 @@ const RackManager = () => {
       else if (source.type === 'book' && targetType === 'shelf') {
         const targetRackBooks = books.filter(b => b.rack?.id === targetData.id);
         const nextPos = targetRackBooks.length > 0 ? Math.max(...targetRackBooks.map(b => b.position || 0)) + 1 : 0;
-        await axios.patch(`${API}/books/${source.data.id}/rack`, { 
-          rackId: targetData.id, 
-          position: nextPos 
+        await axios.patch(`${API}/books/${source.data.id}/rack`, {
+          rackId: targetData.id,
+          position: nextPos
         });
       }
       loadAll();
@@ -147,8 +148,8 @@ const RackManager = () => {
   // ─── Render ──────────────────────────────────────────────────────────────────
   const sortedRacks = [...racks].sort((a, b) => a.columnNumber - b.columnNumber);
   const filteredRacks = sortedRacks.filter(r => !search || r.section.toLowerCase().includes(search.toLowerCase()));
-  
-  const booksInSelected = selectedRack 
+
+  const booksInSelected = selectedRack
     ? books.filter(b => b.rack?.id === selectedRack.id).sort((a, b) => (a.position || 0) - (b.position || 0))
     : [];
 
@@ -159,9 +160,9 @@ const RackManager = () => {
           <h2 style={{ color: '#111827', margin: 0 }}>Inventory Architect</h2>
           <p style={{ color: '#6b7280', fontSize: '13px', margin: '5px 0 0 0' }}>Manage rack locations and book placements</p>
         </div>
-        <input 
-          type="text" className="input-field" placeholder="Search racks..." 
-          style={{ width: '250px', marginBottom: 0 }} value={search} onChange={e => setSearch(e.target.value)} 
+        <input
+          type="text" className="input-field" placeholder="Search racks..."
+          style={{ width: '250px', marginBottom: 0 }} value={search} onChange={e => setSearch(e.target.value)}
         />
       </div>
 
@@ -169,7 +170,7 @@ const RackManager = () => {
         {/* Racks Grid */}
         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
           {filteredRacks.map(rack => (
-            <div 
+            <div
               key={rack.id}
               draggable
               onDragStart={(e) => handleDragStart(e, 'rack', rack)}
@@ -185,7 +186,7 @@ const RackManager = () => {
                 boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
               }}
             >
-              <button 
+              <button
                 onClick={(e) => handleDeleteRack(e, rack.id, rack.section)}
                 style={{ position: 'absolute', top: '10px', right: '10px', background: 'transparent', border: 'none', color: '#ef4444', fontSize: '10px', cursor: 'pointer', fontWeight: 'bold' }}
               >
@@ -222,17 +223,17 @@ const RackManager = () => {
                 const shelfBooks = booksInSelected.slice(shelfIdx * 6, (shelfIdx + 1) * 6);
                 return (
                   <div key={shelfIdx} style={{ position: 'relative' }}>
-                    <div 
+                    <div
                       onDragOver={(e) => handleDragOver(e, `shelf-${shelfIdx}`)}
                       onDrop={(e) => handleDrop(e, 'shelf', selectedRack)}
-                      style={{ 
+                      style={{
                         display: 'flex', gap: '12px', alignItems: 'flex-end', padding: '0 15px', minHeight: '145px',
                         backgroundColor: dragOverId === `shelf-${shelfIdx}` ? '#f0fdf4' : 'transparent',
                         borderRadius: '12px', transition: 'all 0.3s'
                       }}
                     >
                       {shelfBooks.map(book => (
-                        <div 
+                        <div
                           key={book.id}
                           draggable
                           onDragStart={(e) => handleDragStart(e, 'book', book)}
@@ -249,7 +250,7 @@ const RackManager = () => {
                             zIndex: dragOverId === `book-${book.id}` ? 10 : 1
                           }}
                         >
-                          <button 
+                          <button
                             onClick={(e) => removeBookFromRack(e, book.id)}
                             style={{ position: 'absolute', top: '-8px', right: '-8px', background: '#ef4444', border: 'none', color: 'white', borderRadius: '50%', width: '18px', height: '18px', cursor: 'pointer', fontSize: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                           >✕</button>
@@ -267,7 +268,7 @@ const RackManager = () => {
             </div>
 
             <div style={{ marginTop: '40px' }}>
-              <button 
+              <button
                 onClick={() => setShowAddBookForm(!showAddBookForm)}
                 style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#f3f4f6', color: '#111827', border: '1px solid #d1d5db', fontWeight: '600', cursor: 'pointer' }}
               >
@@ -277,10 +278,10 @@ const RackManager = () => {
 
             {showAddBookForm && (
               <form onSubmit={handleAddBook} style={{ marginTop: '20px', background: '#f9fafb', padding: '20px', borderRadius: '12px', border: '1px solid #e5e7eb', display: 'grid', gap: '15px' }}>
-                <input type="text" placeholder="Title" className="input-field" value={bookForm.title} onChange={e => setBookForm({...bookForm, title: e.target.value})} required style={{ marginBottom: 0 }} />
+                <input type="text" placeholder="Title" className="input-field" value={bookForm.title} onChange={e => setBookForm({ ...bookForm, title: e.target.value })} required style={{ marginBottom: 0 }} />
                 <div style={{ display: 'flex', gap: '10px' }}>
-                   <input type="text" placeholder="Author" className="input-field" style={{ flex: 1, marginBottom: 0 }} value={bookForm.author} onChange={e => setBookForm({...bookForm, author: e.target.value})} required />
-                   <input type="text" placeholder="ISBN" className="input-field" style={{ flex: 1, marginBottom: 0 }} value={bookForm.isbn} onChange={e => setBookForm({...bookForm, isbn: e.target.value})} required />
+                  <input type="text" placeholder="Author" className="input-field" style={{ flex: 1, marginBottom: 0 }} value={bookForm.author} onChange={e => setBookForm({ ...bookForm, author: e.target.value })} required />
+                  <input type="text" placeholder="ISBN" className="input-field" style={{ flex: 1, marginBottom: 0 }} value={bookForm.isbn} onChange={e => setBookForm({ ...bookForm, isbn: e.target.value })} required />
                 </div>
                 <button type="submit" className="btn-primary" style={{ padding: '12px' }}>Save to Shelf</button>
               </form>

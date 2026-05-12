@@ -35,7 +35,7 @@ const AdminDashboard = () => {
 
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {menuItems.map(item => (
-            <div 
+            <div
               key={item.id}
               className={`sidebar-item ${activeTab === item.id ? 'active' : ''}`}
               onClick={() => setActiveTab(item.id)}
@@ -46,9 +46,9 @@ const AdminDashboard = () => {
         </div>
 
         <div style={{ padding: '15px', borderTop: '1px solid var(--sidebar-border)' }}>
-          <button 
-            onClick={logout} 
-            className="sidebar-item" 
+          <button
+            onClick={logout}
+            className="sidebar-item"
             style={{ width: 'calc(100% - 16px)', border: 'none', background: 'transparent', color: '#ef4444' }}
           >
             Sign Out

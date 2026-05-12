@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 
-const API = "https://lib-org-backend-production.up.railway.app/api";
+import API from '../../apiConfig';
+
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -28,7 +29,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-const response = await axios.get(`${API}/users/profile`);      if (response.data) {
+      const response = await axios.get(`${API}/users/profile`); if (response.data) {
         setProfile({
           username: response.data.username || '',
           firstName: response.data.firstName || '',
@@ -242,7 +243,7 @@ const response = await axios.get(`${API}/users/profile`);      if (response.data
         <div style={{ marginTop: '40px', borderTop: '1px solid #e5e7eb', paddingTop: '20px' }}>
           <h4 style={{ color: '#ef4444', marginBottom: '10px' }}>Danger Zone</h4>
           <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '15px' }}>Deleting your account is permanent. All your data will be wiped.</p>
-          <button 
+          <button
             onClick={handleDeleteAccount}
             style={{ background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
           >

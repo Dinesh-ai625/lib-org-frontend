@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API = "https://lib-org-backend-production.up.railway.app/api";
+import API from '../../apiConfig';
+
 const AdminAccountManager = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -21,7 +22,7 @@ const AdminAccountManager = () => {
     setLoading(true);
     setMessage({ text: '', type: '' });
     try {
-await axios.post(`${API}/auth/signup`, formData);     setMessage({ text: `Account created successfully for ${formData.username}!`, type: 'success' });
+      await axios.post(`${API}/auth/signup`, formData); setMessage({ text: `Account created successfully for ${formData.username}!`, type: 'success' });
       setFormData({ username: '', email: '', password: '', role: 'USER' });
     } catch (error) {
       setMessage({ text: error.response?.data || 'Failed to create account', type: 'error' });
@@ -38,9 +39,9 @@ await axios.post(`${API}/auth/signup`, formData);     setMessage({ text: `Accoun
       </p>
 
       {message.text && (
-        <div style={{ 
-          padding: '12px', 
-          borderRadius: '8px', 
+        <div style={{
+          padding: '12px',
+          borderRadius: '8px',
           marginBottom: '20px',
           backgroundColor: message.type === 'success' ? '#dcfce7' : '#fee2e2',
           color: message.type === 'success' ? '#166534' : '#991b1b',
@@ -54,39 +55,39 @@ await axios.post(`${API}/auth/signup`, formData);     setMessage({ text: `Accoun
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', fontSize: '14px' }}>Username</label>
-          <input 
-            type="text" 
-            name="username" 
-            className="input-field" 
-            value={formData.username} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="text"
+            name="username"
+            className="input-field"
+            value={formData.username}
+            onChange={handleChange}
+            required
             placeholder="e.g. staff_member"
           />
         </div>
 
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', fontSize: '14px' }}>Email Address</label>
-          <input 
-            type="email" 
-            name="email" 
-            className="input-field" 
-            value={formData.email} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="email"
+            name="email"
+            className="input-field"
+            value={formData.email}
+            onChange={handleChange}
+            required
             placeholder="e.g. staff@library.com"
           />
         </div>
 
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', fontSize: '14px' }}>Initial Password</label>
-          <input 
-            type="password" 
-            name="password" 
-            className="input-field" 
-            value={formData.password} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="password"
+            name="password"
+            className="input-field"
+            value={formData.password}
+            onChange={handleChange}
+            required
             placeholder="••••••••"
           />
         </div>
@@ -94,15 +95,15 @@ await axios.post(`${API}/auth/signup`, formData);     setMessage({ text: `Accoun
         <div style={{ marginBottom: '25px' }}>
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', fontSize: '14px' }}>Account Role</label>
           <div className="role-selector">
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={`role-btn ${formData.role === 'USER' ? 'active' : ''}`}
               onClick={() => setFormData({ ...formData, role: 'USER' })}
             >
               User / Student
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={`role-btn ${formData.role === 'ADMIN' ? 'active' : ''}`}
               onClick={() => setFormData({ ...formData, role: 'ADMIN' })}
             >

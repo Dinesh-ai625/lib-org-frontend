@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = "https://lib-org-backend-production.up.railway.app/api";
+import API from '../../apiConfig';
+
 
 const FineManager = () => {
   const [fines, setFines] = useState([]);
@@ -15,7 +16,7 @@ const FineManager = () => {
 
   const fetchFines = async () => {
     try {
-const response = await axios.get(`${API}/fines/all`);      setFines(response.data);
+      const response = await axios.get(`${API}/fines/all`); setFines(response.data);
     } catch (error) {
       console.error('Error fetching fines', error);
     }
@@ -44,13 +45,13 @@ const response = await axios.get(`${API}/fines/all`);      setFines(response.dat
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '24px' }}>
       <h3 style={{ marginBottom: '20px', color: '#10a37f' }}>Manually Add Fine</h3>
-      
+
       <form onSubmit={addFine} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr auto', gap: '15px', marginBottom: '30px' }}>
-        <select 
-          className="input-field" 
-          value={fineData.userId} 
-          onChange={(e) => setFineData({ ...fineData, userId: e.target.value })} 
-          required 
+        <select
+          className="input-field"
+          value={fineData.userId}
+          onChange={(e) => setFineData({ ...fineData, userId: e.target.value })}
+          required
           style={{ marginBottom: 0 }}
         >
           <option value="">Select User...</option>
@@ -59,24 +60,24 @@ const response = await axios.get(`${API}/fines/all`);      setFines(response.dat
           ))}
         </select>
 
-        <input 
-          type="number" 
-          placeholder="Amount ($)" 
-          className="input-field" 
-          value={fineData.amount} 
-          onChange={(e) => setFineData({ ...fineData, amount: e.target.value })} 
-          required 
+        <input
+          type="number"
+          placeholder="Amount ($)"
+          className="input-field"
+          value={fineData.amount}
+          onChange={(e) => setFineData({ ...fineData, amount: e.target.value })}
+          required
           step="0.01"
           style={{ marginBottom: 0 }}
         />
 
-        <input 
-          type="text" 
-          placeholder="Reason (e.g. Lost Book)" 
-          className="input-field" 
-          value={fineData.reason} 
-          onChange={(e) => setFineData({ ...fineData, reason: e.target.value })} 
-          required 
+        <input
+          type="text"
+          placeholder="Reason (e.g. Lost Book)"
+          className="input-field"
+          value={fineData.reason}
+          onChange={(e) => setFineData({ ...fineData, reason: e.target.value })}
+          required
           style={{ marginBottom: 0 }}
         />
 
@@ -103,9 +104,9 @@ const response = await axios.get(`${API}/fines/all`);      setFines(response.dat
                 <td style={{ padding: '12px', color: '#374151' }}>{fine.reason}</td>
                 <td style={{ padding: '12px', color: '#6b7280' }}>{new Date(fine.createdAt).toLocaleDateString()}</td>
                 <td style={{ padding: '12px' }}>
-                  <span style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px', 
+                  <span style={{
+                    padding: '4px 8px',
+                    borderRadius: '4px',
                     fontSize: '11px',
                     fontWeight: 'bold',
                     backgroundColor: fine.status === 'PENDING' ? '#fee2e2' : '#dcfce7',

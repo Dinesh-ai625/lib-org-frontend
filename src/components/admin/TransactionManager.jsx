@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = "https://lib-org-backend-production.up.railway.app/api";
+import API from '../../apiConfig';
+
 
 const TransactionManager = () => {
   const [transactions, setTransactions] = useState([]);
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState([]);
-  
+
   const [issueData, setIssueData] = useState({ bookId: '', userId: '' });
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const TransactionManager = () => {
 
   const fetchTransactions = async () => {
     try {
-const response = await axios.get(`${API}/transactions/all`);      setTransactions(response.data);
+      const response = await axios.get(`${API}/transactions/all`); setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions', error);
     }
@@ -45,7 +46,8 @@ const response = await axios.get(`${API}/transactions/all`);      setTransaction
   const issueBook = async (e) => {
     e.preventDefault();
     try {
-await axios.post(`${API}/transactions/issue`, {        bookId: parseInt(issueData.bookId),
+      await axios.post(`${API}/transactions/issue`, {
+        bookId: parseInt(issueData.bookId),
         userId: parseInt(issueData.userId)
       });
       setIssueData({ bookId: '', userId: '' });
@@ -69,13 +71,13 @@ await axios.post(`${API}/transactions/issue`, {        bookId: parseInt(issueDat
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '24px' }}>
       <h3 style={{ marginBottom: '20px', color: '#10a37f' }}>Issue New Book</h3>
-      
+
       <form onSubmit={issueBook} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '15px', marginBottom: '30px' }}>
-        <select 
-          className="input-field" 
-          value={issueData.userId} 
-          onChange={(e) => setIssueData({ ...issueData, userId: e.target.value })} 
-          required 
+        <select
+          className="input-field"
+          value={issueData.userId}
+          onChange={(e) => setIssueData({ ...issueData, userId: e.target.value })}
+          required
           style={{ marginBottom: 0 }}
         >
           <option value="">Select User...</option>
@@ -84,11 +86,11 @@ await axios.post(`${API}/transactions/issue`, {        bookId: parseInt(issueDat
           ))}
         </select>
 
-        <select 
-          className="input-field" 
-          value={issueData.bookId} 
-          onChange={(e) => setIssueData({ ...issueData, bookId: e.target.value })} 
-          required 
+        <select
+          className="input-field"
+          value={issueData.bookId}
+          onChange={(e) => setIssueData({ ...issueData, bookId: e.target.value })}
+          required
           style={{ marginBottom: 0 }}
         >
           <option value="">Select Book...</option>
@@ -123,9 +125,9 @@ await axios.post(`${API}/transactions/issue`, {        bookId: parseInt(issueDat
                 <td style={{ padding: '12px', color: '#6b7280' }}>{tx.issueDate}</td>
                 <td style={{ padding: '12px', color: '#6b7280' }}>{tx.dueDate}</td>
                 <td style={{ padding: '12px' }}>
-                  <span style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px', 
+                  <span style={{
+                    padding: '4px 8px',
+                    borderRadius: '4px',
                     fontSize: '11px',
                     fontWeight: 'bold',
                     backgroundColor: tx.status === 'BORROWED' ? '#fef3c7' : (tx.status === 'RETURNED' ? '#dcfce7' : '#fee2e2'),
@@ -136,8 +138,8 @@ await axios.post(`${API}/transactions/issue`, {        bookId: parseInt(issueDat
                 </td>
                 <td style={{ padding: '12px' }}>
                   {tx.status === 'BORROWED' && (
-                    <button 
-                      onClick={() => returnBook(tx.id)} 
+                    <button
+                      onClick={() => returnBook(tx.id)}
                       style={{ background: 'transparent', color: '#10a37f', border: '1px solid #10a37f', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', fontWeight: '600' }}
                     >
                       Mark Returned

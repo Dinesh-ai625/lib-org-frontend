@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = "https://lib-org-backend-production.up.railway.app/api";
+import API from '../../apiConfig';
+
 
 const BookManager = () => {
   const [books, setBooks] = useState([]);
@@ -32,7 +33,7 @@ const BookManager = () => {
 
   const fetchRacks = async () => {
     try {
-const response = await axios.get(`${API}/racks`);      setRacks(Array.isArray(response.data) ? response.data : []);
+      const response = await axios.get(`${API}/racks`); setRacks(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching racks', error);
     }
@@ -54,7 +55,8 @@ const response = await axios.get(`${API}/racks`);      setRacks(Array.isArray(re
     }
 
     try {
-await axios.post(`${API}/books`, {        ...formData,
+      await axios.post(`${API}/books`, {
+        ...formData,
         totalCopies: parseInt(formData.totalCopies),
         rackId: formData.rackId ? parseInt(formData.rackId) : null
       });
@@ -94,7 +96,7 @@ await axios.post(`${API}/books`, {        ...formData,
         <button onClick={() => setSelectedBook(null)} style={{ background: 'transparent', color: '#6b7280', border: 'none', cursor: 'pointer', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '500' }}>
           ← Back to Library
         </button>
-        
+
         <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
           <div style={{ flex: '1', minWidth: '250px', maxWidth: '350px' }}>
             {selectedBook.coverUrl ? (
@@ -105,28 +107,28 @@ await axios.post(`${API}/books`, {        ...formData,
               </div>
             )}
           </div>
-          
+
           <div style={{ flex: '2', minWidth: '300px' }}>
             <h1 style={{ fontSize: '2.5rem', color: '#111827', marginBottom: '10px' }}>{selectedBook.title}</h1>
             <p style={{ fontSize: '1.2rem', color: '#10a37f', marginBottom: '25px' }}>{selectedBook.author}</p>
-            
+
             <div style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
-              <button 
-                onClick={() => deleteBook(selectedBook.id)} 
+              <button
+                onClick={() => deleteBook(selectedBook.id)}
                 style={{ background: '#ef4444', color: 'white', border: 'none', padding: '10px 24px', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}
               >
                 Remove Book
               </button>
             </div>
-            
+
             <div style={{ borderBottom: '1px solid #e5e7eb', marginBottom: '20px' }}>
               <span style={{ display: 'inline-block', paddingBottom: '10px', borderBottom: '2px solid #10a37f', color: '#10a37f', fontWeight: 'bold' }}>ABOUT BOOK</span>
             </div>
-            
+
             <p style={{ color: '#374151', lineHeight: '1.6', fontSize: '15px', marginBottom: '40px' }}>
               {selectedBook.description || 'No description available for this book.'}
             </p>
-            
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', color: '#4b5563', fontSize: '14px' }}>
               <div><strong style={{ color: '#111827', display: 'inline-block', width: '100px' }}>Category:</strong> {selectedBook.category}</div>
               <div><strong style={{ color: '#111827', display: 'inline-block', width: '100px' }}>Genre:</strong> {selectedBook.genre}</div>
@@ -144,8 +146,8 @@ await axios.post(`${API}/books`, {        ...formData,
     <div className="animate-fade-in">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
         <h2 style={{ fontSize: '24px', color: '#111827' }}>Library Books</h2>
-        <button 
-          onClick={() => setShowAddForm(!showAddForm)} 
+        <button
+          onClick={() => setShowAddForm(!showAddForm)}
           className="btn-primary"
           style={{ width: 'auto' }}
         >
@@ -164,7 +166,7 @@ await axios.post(`${API}/books`, {        ...formData,
             <input type="text" name="isbn" placeholder="ISBN (Unique)" className="input-field" value={formData.isbn} onChange={handleChange} required />
             <input type="number" name="totalCopies" placeholder="Total Copies" className="input-field" value={formData.totalCopies} onChange={handleChange} required />
             <input type="text" name="coverUrl" placeholder="Cover Image URL (optional)" className="input-field" value={formData.coverUrl} onChange={handleChange} style={{ gridColumn: 'span 2' }} />
-            
+
             <select name="rackId" className="input-field" value={formData.rackId} onChange={handleChange} required style={{ gridColumn: 'span 2' }}>
               <option value="">Select Rack Location...</option>
               {racks.map(rack => (
@@ -183,17 +185,17 @@ await axios.post(`${API}/books`, {        ...formData,
 
       {/* Search and Filters */}
       <div className="glass-panel" style={{ padding: '20px', marginBottom: '25px', display: 'flex', gap: '15px' }}>
-        <input 
-          type="text" 
-          placeholder={`Search by ${searchBy}...`} 
-          className="input-field" 
+        <input
+          type="text"
+          placeholder={`Search by ${searchBy}...`}
+          className="input-field"
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           style={{ flex: 3, marginBottom: 0 }}
         />
-        <select 
-          className="input-field" 
-          value={searchBy} 
+        <select
+          className="input-field"
+          value={searchBy}
           onChange={e => setSearchBy(e.target.value)}
           style={{ flex: 1, marginBottom: 0 }}
         >

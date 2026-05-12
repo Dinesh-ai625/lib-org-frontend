@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = "https://lib-org-backend-production.up.railway.app/api";
+import API from '../apiConfig';
+
 
 export const AuthContext = createContext();
 
